@@ -1,0 +1,21 @@
+body {
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+#music_player {
+  margin: 10px 30px 10px 30px;
+}
+
+#controler {
+  text-align="center";
+}
+#controler > img {
+  margin: 0 20px 10px 20px;
+}
+
+#music_list {
+  color: #35cc9d;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Brionac</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <div id="music_player">
+      <div id="controler" class="center-align">
+        <img class="icon" src="../assets/icons/return.png" alt="return">
+        <img id="start_btn" class="icon" src="../assets/icons/play.png" alt="play">
+        <img class="icon" src="../assets/icons/next.png" alt="next">
+      </div>
+
+      <div class="progress">
+        <div id="play_progress"class="determinate" style="width: 0%"></div>
+      </div>
+
+      <div id="volume_controler" >
+        <a href="#"><img class="icon" id="volume" src="../assets/icons/volume.png" alt="volume"></a>
+        <p class="range-field">
+          <input type="range" onchange="setVolume(this.value)" id="volume_range" min="0" max="100" />
+        </p>
+      </div>
+
+      <div id="play_options" class="center-align">
+        <a href="#"><img class="icon" src="../assets/icons/repeart.png" alt="repeat"></a>
+        <a href="#"><img class="icon" src="../assets/icons/shuffle.png" alt="shuffle"></a>
+      </div>
+
+      <div id="music_info">
+        <div id="music_title"></div>
+      </div>
+
+      <table id="music_table" class="bordered highlight">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="music_tbody">
+        </tbody>
+      </table>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
