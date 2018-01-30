@@ -8,7 +8,7 @@ let win
 function createWindow () {
     win = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 1200,
     })
 
     win.loadURL(url.format({
@@ -38,10 +38,12 @@ app.on('activate', () => {
     }
 })
 
-ipcMain.on('show-music', (event, arg) => {
-    fs.readdir('./musics/', (err, files) => {
-        if (err) throw err;
-        console.log(files);
-        event.returnValue = files;
-    });
-});
+// ipcMain.on('show-music', (event, arg) => {
+//     fs.readdir('./musics/', (err, files) => {
+//         if (err) throw err;
+//         console.log(files);
+//         event.returnValue = files;
+//     });
+// });
+//
+

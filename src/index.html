@@ -15,7 +15,7 @@
       <div id="controler" class="center-align">
         <img class="icon" src="../assets/icons/return.png" alt="return">
         <img id="start_btn" class="icon" src="../assets/icons/play.png" alt="play">
-        <img class="icon" src="../assets/icons/next.png" alt="next">
+        <img id="next_btn" class="icon" src="../assets/icons/next.png" alt="next">
       </div>
 
       <div class="progress">
@@ -38,18 +38,10 @@
         <div id="music_title"></div>
       </div>
 
-      <table id="music_table" class="bordered highlight">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Artist</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody id="music_tbody">
-        </tbody>
-      </table>
+      <ul id="queue_list"></ul>
+
     </div>
+    <input type="button" value="import" id="import_music">
     <script src="script.js"></script>
   </body>
 </html>

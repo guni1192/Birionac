@@ -1,17 +1,31 @@
 const audio = new Audio()
-const { ipcRenderer } = require('electron');
-const playList = []
+const { ipcRenderer } = require('electron')
+const { app, BrowserWindow, dialog } = require('electron').remote
+
+let queue = new Array()
+
+queue.enqueue = (path) => {
+    queue.push(path)
+    setMusic()
+    showQueue()
+}
+
+queue.dequeue = () => {
+    audio.pause()
+    queue.shift()
+    setMusic()
+    showQueue()
+}
 
 const iconDir = '../assets/icons/'
 const musicDir = '../musics/'
 
 window.onload = () => {
-    // DEBUG_CODE
-    setMusic('WildWarDance.mp3')
     // Event追加
     document.getElementById('volume').onclick = setMute
     document.getElementById('start_btn').onclick = startOrStop
-    showMusic()
+    document.getElementById('import_music').onclick = showOpenDialog
+    document.getElementById('next_btn').onclick = queue.dequeue
 }
 
 const startOrStop = () => {
@@ -37,15 +51,16 @@ const startOrStop = () => {
     }
 }
 
-const setMusic = path => {
-    audio.src = musicDir + path
-    setMusicInfo(path)
+const setMusic = () => {
+    audio.src = queue[0]
+    setMusicInfo(queue[0])
 }
 
 const setMusicInfo = (title) => {
     const musicTitle = document.getElementById('music_title')
     musicTitle.innerText = title
 }
+
 
 const setVolume = ( volume ) => { audio.volume = volume / 100 }
 
@@ -62,17 +77,38 @@ const setProgress = () => {
 }
 
 
-const showMusic = () => {
-    const musicFiles = ipcRenderer.sendSync('show-music')
-    const musicTBody= document.getElementById('music_tbody')
-    musicFiles.forEach( (music) => {
-        const row = musicTBody.insertRow(-1)
-        const name = row.insertCell(-1)
-        const artist = row.insertCell(-1)
-        const time = row.insertCell(-1)
-        name.innerHTML = '<a href="#">' + music + '</a>'
-        artist.innerHTML = 'None'
-        time.innerHTML = 'None'
-        name.onclick = () => { setMusic(music) }
+const showQueue = () => {
+    const queue_list = document.getElementById('queue_list')
+    queue_list.innerHTML = ''
+    queue.forEach( music => {
+        queue_list.innerHTML += '<li><a href="#">'+ music +'</a></li>'
     })
+}
+
+const showOpenDialog = flag => {
+    const options = {
+        title: 'Open Music Files',
+        defaultPath: app.getPath('userDesktop'),
+        filters: [
+            { name: 'Musics', extensions: ['mp3', 'wav', 'm4a']},
+        ],
+        properties: ['openFile', 'multiSelections', 'createDirectory']
+    };
+    if(flag){
+        let win = BrowserWindow.getFocusedWindow();
+        dialog.showOpenDialog(win, options, (filenames) => {
+            if (filenames !== undefined) {
+                console.log(filenames)
+                filenames.forEach((filename) => {
+                    console.log(filename)
+                    queue.enqueue(filename)
+                    setMusic()
+                })
+            }
+        });
+    } else {
+        dialog.showOpenDialog(options, (filenames) => {
+            console.log(filenames)
+        });
+    }
 }
